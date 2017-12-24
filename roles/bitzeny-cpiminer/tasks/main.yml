@@ -1,0 +1,38 @@
+---
+- name: install packages
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - make
+    - gcc
+    - gcc-c++
+    - automake
+    - autoconf
+    - libtool
+    - libcurl-devel
+
+- name: get source
+  git:
+    repo: https://github.com/bitzeny/cpuminer.git
+    dest: /usr/local/src/cpuminer
+
+- name: build minerd
+  shell: ./autogen.sh && ./configure CFLAGS="-O3" && make && cp -p minerd /usr/local/bin/
+  args:
+    chdir: /usr/local/src/cpuminer
+    creates: /usr/local/src/cpuminer/minerd
+  notify: restart minerd
+
+- name: put systemd config file
+  template:
+    src: etc/systemd/system/minerd.service.j2
+    dest: /etc/systemd/system/minerd.service
+  notify: restart minerd
+
+- name: start minerd automatically
+  systemd:
+    name: minerd.service
+    state: started
+    daemon_reload: yes
+    enabled: yes

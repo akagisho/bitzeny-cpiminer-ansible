@@ -1,0 +1,10 @@
+[Unit]
+Description = minerd daemon
+
+[Service]
+ExecStart = /usr/local/bin/minerd -a yescrypt -o stratum+tcp://{{ minerd_stratum_host }}:{{ minerd_stratum_port }} -u {{ minerd_stratum_user }} -p {{ minerd_stratum_pass }}
+Restart = always
+Type = simple
+
+[Install]
+WantedBy=multi-user.target

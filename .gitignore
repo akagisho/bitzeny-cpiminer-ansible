@@ -1,0 +1,6 @@
+.DS_Store
+/.vagrant
+/inventories/production/hosts
+/inventories/production/group_vars/all
+/inventories/production/host_vars/all
+/site.retry

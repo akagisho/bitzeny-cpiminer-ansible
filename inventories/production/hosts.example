@@ -1,0 +1,8 @@
+[default]
+mining.example.com ansible_user=root
+
+[default:vars]
+minerd_stratum_host=example.local
+minerd_stratum_port=19333
+minerd_stratum_user=user
+minerd_stratum_pass=password
